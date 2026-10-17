@@ -165,10 +165,14 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    C["Client Pod"] --> Z1["ztunnel<br/><i>L4 · nó</i>"]
+    subgraph NA["Nó A"]
+        C["Client Pod"] --> Z1["ztunnel<br/><i>L4 · DaemonSet</i>"]
+    end
     Z1 -->|HBONE| W["Waypoint<br/><i>L7</i>"]
-    W -->|HBONE| Z2["ztunnel<br/><i>L4 · nó</i>"]
-    Z2 --> B["Backend Pod"]
+    W -->|HBONE| Z2
+    subgraph NB["Nó B"]
+        Z2["ztunnel<br/><i>L4 · DaemonSet</i>"] --> B["Backend Pod"]
+    end
     I["istiod<br/><i>control plane</i>"] -. configura .-> Z1
     I -. configura .-> Z2
     I -. configura .-> W
@@ -182,6 +186,8 @@ flowchart LR
     class W wp
     class I cp
 ```
+
+> O ztunnel roda como **DaemonSet**: é um por nó, compartilhado por todos os pods daquele nó. Entre pods em nós diferentes, o tráfego passa pelo ztunnel de origem e pelo de destino. No mesmo nó, um único ztunnel faz as duas pontas.
 
 ---
 
