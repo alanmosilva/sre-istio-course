@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: httpbin-egress
+  namespace: istio-lab
+spec:
+  selector:
+    istio: egressgateway
+  servers:
+    - port:
+        number: 443
+        name: tls-httpbin
+        protocol: TLS
+      hosts:
+        - httpbin.org
+      tls:
+        mode: PASSTHROUGH

@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: httpbin
+  namespace: istio-lab
+spec:
+  hosts:
+    - httpbin.org
+  location: MESH_EXTERNAL
+  resolution: DNS
+  ports:
+    - number: 80
+      name: http
+      protocol: HTTP
+    - number: 443
+      name: https
+      protocol: TLS

@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: backend-external
+  namespace: istio-lab
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - backend-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api
+      route:
+        - destination:
+            host: backend
+            port:
+              number: 80

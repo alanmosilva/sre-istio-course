@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: client-sa
+  namespace: istio-lab
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-sa
+  namespace: istio-lab
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v1
+  namespace: istio-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v1
+    spec:
+      serviceAccountName: backend-sa
+      containers:
+        - name: backend
+          image: hashicorp/http-echo:1.0
+          args:
+            - "-text=backend-v1"
+            - "-listen=:5678"
+          ports:
+            - containerPort: 5678
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v2
+  namespace: istio-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v2
+    spec:
+      serviceAccountName: backend-sa
+      containers:
+        - name: backend
+          image: hashicorp/http-echo:1.0
+          args:
+            - "-text=backend-v2"
+            - "-listen=:5678"
+          ports:
+            - containerPort: 5678
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: istio-lab
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 5678
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  namespace: istio-lab
+  labels:
+    app: client
+spec:
+  serviceAccountName: client-sa
+  containers:
+    - name: curl
+      image: curlimages/curl:8.10.1
+      command: ["sh", "-c", "sleep infinity"]

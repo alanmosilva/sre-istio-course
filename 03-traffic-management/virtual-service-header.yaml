@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: backend
+  namespace: istio-lab
+spec:
+  hosts:
+    - backend
+  http:
+    - match:
+        - headers:
+            x-version:
+              exact: v2
+      route:
+        - destination:
+            host: backend
+            subset: v2
+    - route:
+        - destination:
+            host: backend
+            subset: v1

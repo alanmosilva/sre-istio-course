@@ -1,0 +1,65 @@
+# Estrutura do repositório
+
+```text
+.gitignore
+01-fundamentos-service-mesh/
+  README.md
+02-sidecar-envoy/
+  README.md
+  app.yaml
+03-traffic-management/
+  README.md
+  destination-rule-circuit-breaker.yaml
+  destination-rule.yaml
+  virtual-service-90-10.yaml
+  virtual-service-header.yaml
+04-seguranca-mtls-authz/
+  README.md
+  authorization-policy-sidecar.yaml
+  legacy-client.yaml
+  peer-authentication-strict.yaml
+05-ingress-gateway-tls/
+  README.md
+  gateway-api.yaml
+  gateway-https.yaml
+  gateway.yaml
+  http-route.yaml
+  ingress.yaml
+  virtual-service.yaml
+06-telemetria-diagnostico/
+  README.md
+07-egress/
+  README.md
+  egress-gateway.yaml
+  egress.yaml
+  service-entry-httpbin.yaml
+  virtual-service-egress.yaml
+08-ambient-mesh/
+  README.md
+  app.yaml
+  authorization-policy-l7.yaml
+  http-route-header.yaml
+  http-route-timeout.yaml
+  http-route-weighted.yaml
+  services-versions.yaml
+09-sidecar-vs-ambient/
+  README.md
+10-troubleshooting/
+  README.md
+11-producao/
+  README.md
+  pdb-istiod-example.yaml
+12-revisao-cleanup/
+  README.md
+CHECKLIST.md
+LICENSE
+README.md
+reference/
+  COMANDOS-RAPIDOS.md
+  TROUBLESHOOTING.md
+  VERSIONS.md
+scripts/
+  check-environment.sh
+  install-istioctl.sh
+  pre-destroy-check.sh
+```

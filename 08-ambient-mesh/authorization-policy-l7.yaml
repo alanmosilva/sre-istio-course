@@ -1,0 +1,20 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: backend-allow-client
+  namespace: ambient-lab
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: backend
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - cluster.local/ns/ambient-lab/sa/client-sa
+      to:
+        - operation:
+            methods: ["GET"]
+            paths: ["/api/*"]

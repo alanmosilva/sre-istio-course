@@ -1,0 +1,17 @@
+# TLS lab files
+*.key
+*.crt
+*.pem
+
+# Backups generated during labs
+*-backup.yaml
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Temporary
+*.tmp
